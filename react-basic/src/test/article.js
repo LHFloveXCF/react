@@ -2,6 +2,7 @@ import '../static/css/article.css'
 import avatar from '../static/images/bozai.png'
 import { useState } from 'react'
 import classNames from 'classnames'
+import _ from 'lodash'
 
 /**
  * 评论列表的渲染和操作
@@ -25,7 +26,7 @@ const defaultList = [
         content: '哎哟，不错哦',
         // 评论时间
         ctime: '10-18 08:15',
-        like: 88,
+        like: 100,
     },
     {
         rpid: 2,
@@ -76,7 +77,7 @@ const tabs = [
 ]
 
 const Article = () => {
-    const [contentList, setContentList] = useState(defaultList)
+    const [contentList, setContentList] = useState(_.orderBy(defaultList, 'like', 'desc'))
     const [type, setType] = useState(tabs)
 
     const [myType, setMyType] = useState('hot')
@@ -87,6 +88,11 @@ const Article = () => {
 
     const changeType = (type) => {
         setMyType(type)
+        if (type === 'hot') {
+            setContentList(_.orderBy(contentList, 'like', 'desc'))
+        } else if (type === 'time') {
+            setContentList(_.orderBy(contentList, 'ctime', 'desc'))
+        }
     }
 
     return (
