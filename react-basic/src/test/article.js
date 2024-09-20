@@ -76,6 +76,11 @@ const tabs = [
 
 const Article = () => {
     const [contentList, setContentList] = useState(defaultList)
+
+    const delContent = (id) => {
+        setContentList(contentList.filter(item => item.rpid !== id))
+        
+    }
     return (
         <div className="app">
             {/* 导航 Tab */}
@@ -123,8 +128,9 @@ const Article = () => {
                         <div className="root-reply-avatar">
                             <div className="bili-avatar">
                                 <img
+                                    src = {item.user.avatar}
                                     className="bili-avatar-img"
-                                    alt={item.user.avatar}
+                                    alt=""
                                 />
                             </div>
                         </div>
@@ -143,7 +149,7 @@ const Article = () => {
                                     {/* 评论数量 */}
                                     <span className="reply-time">点赞数:{item.like}</span>
                                     {/* 只有自己的评论才显示删除按钮 */}
-                                    {item.user.uid === user.uid && <span className="delete-btn">
+                                    {item.user.uid === user.uid && <span onClick={() => delContent(item.rpid)} className="delete-btn">
                                         删除
                                     </span>}
                                 </div>
