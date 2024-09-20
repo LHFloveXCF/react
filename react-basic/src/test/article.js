@@ -1,6 +1,7 @@
 import '../static/css/article.css'
 import avatar from '../static/images/bozai.png'
 import { useState } from 'react'
+import classNames from 'classnames'
 
 /**
  * 评论列表的渲染和操作
@@ -76,11 +77,18 @@ const tabs = [
 
 const Article = () => {
     const [contentList, setContentList] = useState(defaultList)
+    const [type, setType] = useState(tabs)
+
+    const [myType, setMyType] = useState('hot')
 
     const delContent = (id) => {
         setContentList(contentList.filter(item => item.rpid !== id))
-        
     }
+
+    const changeType = (type) => {
+        setMyType(type)
+    }
+
     return (
         <div className="app">
             {/* 导航 Tab */}
@@ -93,8 +101,7 @@ const Article = () => {
                     </li>
                     <li className="nav-sort">
                         {/* 高亮类名： active */}
-                        <span className='nav-item'>最新</span>
-                        <span className='nav-item'>最热</span>
+                        {type.map(item => <span onClick={() => {changeType(item.type)}} key={item.type} className={classNames('nav-item', { active: item.type === myType})}>{item.text}</span>)}
                     </li>
                 </ul>
             </div>
