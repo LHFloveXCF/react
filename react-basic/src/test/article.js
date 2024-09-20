@@ -142,10 +142,10 @@ const Article = () => {
                                     <span className="reply-time">{item.ctime}</span>
                                     {/* 评论数量 */}
                                     <span className="reply-time">点赞数:{item.like}</span>
-                                    <span className="delete-btn">
+                                    {/* 只有自己的评论才显示删除按钮 */}
+                                    {item.user.uid === user.uid && <span className="delete-btn">
                                         删除
-                                    </span>
-
+                                    </span>}
                                 </div>
                             </div>
                         </div>
