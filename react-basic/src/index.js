@@ -7,12 +7,12 @@ import ReactDOM from 'react-dom/client';
 // import JsxList from './jsx/jsxList';
 // import JsxCondition from './jsx/jsxCondition';
 // import DemoEvent from './event/demo';
-// import Style from './simple/style';
-import Article from './test/article';
+import Bind from './simple/bind';
+// import Article from './test/article';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Article />
+    <Bind />
     // <JsxTest></JsxTest>
     // <JsxList></JsxList>
     // <DemoEvent/>
