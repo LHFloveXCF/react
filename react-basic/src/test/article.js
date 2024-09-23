@@ -1,9 +1,10 @@
 import '../static/css/article.css'
 import avatar from '../static/images/bozai.png'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import classNames from 'classnames'
 import _ from 'lodash'
 import { v1 as uuidv1 } from 'uuid';
+import dayjs from 'dayjs'
 
 /**
  * 评论列表的渲染和操作
@@ -101,6 +102,8 @@ const Article = () => {
         setContent(value)
     }
 
+    const inputRef = useRef(null)
+
     const publishContent = () => {
         setContentList([
             ...contentList,
@@ -112,10 +115,14 @@ const Article = () => {
                     uname: '黑马前端',
                 },
                 content: content,
-                ctime: '10-19 09:00',
+                ctime: dayjs().format('MM-DD HH:mm'),
                 like: 66,
             }
         ])
+        // 清空输入框
+        setContent('')
+        // 设置高亮
+        inputRef.current.focus()
     }
 
     return (
@@ -149,6 +156,7 @@ const Article = () => {
                         <textarea
                             className="reply-box-textarea"
                             placeholder="发一条友善的评论"
+                            ref = {inputRef}
                             value={content}
                             onChange={(e) => { changeContent(e.target.value) }}
                         />
