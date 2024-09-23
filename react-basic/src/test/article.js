@@ -57,8 +57,46 @@ function useGetList() {
     }
 }
 
+function Item({ item, onDel }) {
+    return (
+        <div className="reply-item">
+            {/* 头像 */}
+            <div className="root-reply-avatar">
+                <div className="bili-avatar">
+                    <img
+                        src={item.user.avatar}
+                        className="bili-avatar-img"
+                        alt=""
+                    />
+                </div>
+            </div>
+
+            <div className="content-wrap">
+                {/* 用户名 */}
+                <div className="user-info">
+                    <div className="user-name">{item.user.uname}</div>
+                </div>
+                {/* 评论内容 */}
+                <div className="root-reply">
+                    <span className="reply-content">{item.content}</span>
+                    <div className="reply-info">
+                        {/* 评论时间 */}
+                        <span className="reply-time">{item.ctime}</span>
+                        {/* 评论数量 */}
+                        <span className="reply-time">点赞数:{item.like}</span>
+                        {/* 只有自己的评论才显示删除按钮 */}
+                        {item.user.uid === user.uid && <span onClick={() => onDel(item.rpid)} className="delete-btn">
+                            删除
+                        </span>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const Article = () => {
-    const {contentList, setContentList} = useGetList()
+    const { contentList, setContentList } = useGetList()
 
     const [type, setType] = useState(tabs)
 
@@ -136,7 +174,7 @@ const Article = () => {
                         <textarea
                             className="reply-box-textarea"
                             placeholder="发一条友善的评论"
-                            ref = {inputRef}
+                            ref={inputRef}
                             value={content}
                             onChange={(e) => { changeContent(e.target.value) }}
                         />
@@ -149,39 +187,7 @@ const Article = () => {
                 {/* 评论列表 */}
                 <div className="reply-list">
                     {/* 评论项 */}
-                    {contentList.map(item => (<div key={item.rpid} className="reply-item">
-                        {/* 头像 */}
-                        <div className="root-reply-avatar">
-                            <div className="bili-avatar">
-                                <img
-                                    src={item.user.avatar}
-                                    className="bili-avatar-img"
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-
-                        <div className="content-wrap">
-                            {/* 用户名 */}
-                            <div className="user-info">
-                                <div className="user-name">{item.user.uname}</div>
-                            </div>
-                            {/* 评论内容 */}
-                            <div className="root-reply">
-                                <span className="reply-content">{item.content}</span>
-                                <div className="reply-info">
-                                    {/* 评论时间 */}
-                                    <span className="reply-time">{item.ctime}</span>
-                                    {/* 评论数量 */}
-                                    <span className="reply-time">点赞数:{item.like}</span>
-                                    {/* 只有自己的评论才显示删除按钮 */}
-                                    {item.user.uid === user.uid && <span onClick={() => delContent(item.rpid)} className="delete-btn">
-                                        删除
-                                    </span>}
-                                </div>
-                            </div>
-                        </div>
-                    </div>))}
+                    {contentList.map(item => (<Item key={item.rpid} item = {item} onDel={delContent}/>))}
 
                 </div>
             </div>
