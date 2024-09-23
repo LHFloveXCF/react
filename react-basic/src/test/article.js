@@ -3,6 +3,7 @@ import avatar from '../static/images/bozai.png'
 import { useState } from 'react'
 import classNames from 'classnames'
 import _ from 'lodash'
+import { v1 as uuidv1 } from 'uuid';
 
 /**
  * 评论列表的渲染和操作
@@ -81,6 +82,7 @@ const Article = () => {
     const [type, setType] = useState(tabs)
 
     const [myType, setMyType] = useState('hot')
+    const [content, setContent] = useState('')
 
     const delContent = (id) => {
         setContentList(contentList.filter(item => item.rpid !== id))
@@ -95,6 +97,27 @@ const Article = () => {
         }
     }
 
+    const changeContent = (value) => {
+        setContent(value)
+    }
+
+    const publishContent = () => {
+        setContentList([
+            ...contentList,
+            {
+                rpid: uuidv1(),
+                user: {
+                    uid: '30009257',
+                    avatar,
+                    uname: '黑马前端',
+                },
+                content: content,
+                ctime: '10-19 09:00',
+                like: 66,
+            }
+        ])
+    }
+
     return (
         <div className="app">
             {/* 导航 Tab */}
@@ -103,11 +126,11 @@ const Article = () => {
                     <li className="nav-title">
                         <span className="nav-title-text">评论</span>
                         {/* 评论数量 */}
-                        <span className="total-reply">{10}</span>
+                        <span className="total-reply">{contentList.length}</span>
                     </li>
                     <li className="nav-sort">
                         {/* 高亮类名： active */}
-                        {type.map(item => <span onClick={() => {changeType(item.type)}} key={item.type} className={classNames('nav-item', { active: item.type === myType})}>{item.text}</span>)}
+                        {type.map(item => <span onClick={() => { changeType(item.type) }} key={item.type} className={classNames('nav-item', { active: item.type === myType })}>{item.text}</span>)}
                     </li>
                 </ul>
             </div>
@@ -126,22 +149,24 @@ const Article = () => {
                         <textarea
                             className="reply-box-textarea"
                             placeholder="发一条友善的评论"
+                            value={content}
+                            onChange={(e) => { changeContent(e.target.value) }}
                         />
                         {/* 发布按钮 */}
                         <div className="reply-box-send">
-                            <div className="send-text">发布</div>
+                            <div className="send-text" onClick={publishContent}>发布</div>
                         </div>
                     </div>
                 </div>
                 {/* 评论列表 */}
                 <div className="reply-list">
                     {/* 评论项 */}
-                    {contentList.map(item => (<div key= {item.rpid} className="reply-item">
+                    {contentList.map(item => (<div key={item.rpid} className="reply-item">
                         {/* 头像 */}
                         <div className="root-reply-avatar">
                             <div className="bili-avatar">
                                 <img
-                                    src = {item.user.avatar}
+                                    src={item.user.avatar}
                                     className="bili-avatar-img"
                                     alt=""
                                 />
@@ -169,7 +194,7 @@ const Article = () => {
                             </div>
                         </div>
                     </div>))}
-                    
+
                 </div>
             </div>
         </div>
