@@ -39,7 +39,7 @@ const tabs = [
     { type: 'time', text: '最新' },
 ]
 
-const Article = () => {
+function useGetList() {
     const [contentList, setContentList] = useState([])
 
     useEffect(() => {
@@ -50,7 +50,15 @@ const Article = () => {
         }
 
         getList()
-    })
+    }, [])
+    return {
+        contentList,
+        setContentList
+    }
+}
+
+const Article = () => {
+    const {contentList, setContentList} = useGetList()
 
     const [type, setType] = useState(tabs)
 
