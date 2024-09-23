@@ -7,13 +7,13 @@ import ReactDOM from 'react-dom/client';
 // import JsxList from './jsx/jsxList';
 // import JsxCondition from './jsx/jsxCondition';
 // import DemoEvent from './event/demo';
-import Parent from './simple/HookDemo';
-// import Article from './test/article';
+// import Parent from './simple/HookDemo';
+import Article from './test/article';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Parent />
+    // <Parent />
     // <JsxTest></JsxTest>
     // <JsxList></JsxList>
-    // <DemoEvent/>
+    <Article/>
 );
