@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom/client';
 // import JsxList from './jsx/jsxList';
 // import JsxCondition from './jsx/jsxCondition';
 // import DemoEvent from './event/demo';
-import Parent from './simple/Parent';
+import Parent from './simple/Children';
 // import Article from './test/article';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
